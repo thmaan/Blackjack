@@ -1,4 +1,4 @@
-package com.example.blackjacksembug;
+package com.example.blackjack;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
@@ -22,7 +22,6 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        getSupportActionBar().hide();
 
         registerButton = findViewById(R.id.registerBtn);
         usernameText = findViewById(R.id.username);

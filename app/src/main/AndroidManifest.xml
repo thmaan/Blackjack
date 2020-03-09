@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.blackjacksembug">
+    package="com.example.blackjack">
 
     <application
         android:allowBackup="true"
@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BlackjackActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.example.blackjack.BlackjackActivity" />
+        <activity android:name="com.example.blackjack.RegisterActivity" />
+        <activity android:name="com.example.blackjack.LoginActivity" />
+        <activity android:name="com.example.blackjack.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

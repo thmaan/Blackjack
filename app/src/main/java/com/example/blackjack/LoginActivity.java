@@ -1,4 +1,4 @@
-package com.example.blackjacksembug;
+package com.example.blackjack;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,7 +26,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().hide();
 
         backButton = findViewById(R.id.backBtn);
         usernameText = findViewById(R.id.username);

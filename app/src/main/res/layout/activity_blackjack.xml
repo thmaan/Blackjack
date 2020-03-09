@@ -18,9 +18,8 @@
         app:layout_constraintBottom_toTopOf="@+id/standBtn"
         app:layout_constraintStart_toEndOf="@+id/firstcarbot"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.739" >
+        app:layout_constraintVertical_bias="0.739" />
 
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/secondcarbot"
@@ -58,9 +57,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/secondcard"
         app:layout_constraintTop_toBottomOf="@+id/hitBtn"
-        app:layout_constraintVertical_bias="1.0">
-
-    </LinearLayout>
+        app:layout_constraintVertical_bias="1.0"/>
 
     <LinearLayout
         android:id="@+id/secondcard"
@@ -74,9 +71,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/firstcard"
         app:layout_constraintTop_toBottomOf="@+id/hitBtn"
-        app:layout_constraintVertical_bias="1.0" >
-
-    </LinearLayout>
+        app:layout_constraintVertical_bias="1.0" />
 
     <LinearLayout
         android:id="@+id/firstcarbot"
@@ -97,7 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="64dp"
         android:text="@string/hit"
-    android:background="@drawable/button"
+        android:background="@drawable/button"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -150,9 +145,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toEndOf="@+id/fourthcardbot"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/fifthcard"
@@ -163,5 +157,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fourthcard"
         app:layout_constraintTop_toBottomOf="@+id/hitBtn" />
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

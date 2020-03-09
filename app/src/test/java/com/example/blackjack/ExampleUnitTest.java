@@ -1,4 +1,4 @@
-package com.example.blackjacksembug;
+package com.example.blackjack;
 
 import org.junit.Test;
 
