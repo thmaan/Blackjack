@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/gamelayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BlackjackActivity"
+    android:background="@drawable/background1">
+
+
+    <LinearLayout
+        android:id="@+id/thirdcardbot"
+        android:layout_width="124dp"
+        android:layout_height="211dp"
+        android:layout_marginStart="148dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/standBtn"
+        app:layout_constraintStart_toEndOf="@+id/firstcarbot"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.739" >
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/secondcarbot"
+        android:layout_width="124dp"
+        android:layout_height="211dp"
+        android:layout_marginStart="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/standBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintStart_toEndOf="@+id/firstcarbot"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.595" />
+
+    <LinearLayout
+        android:id="@+id/firstcard"
+        android:layout_width="124dp"
+        android:layout_height="211dp"
+        android:layout_marginTop="436dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.034"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <LinearLayout
+        android:id="@+id/thirdcard"
+        android:layout_width="124dp"
+        android:layout_height="211dp"
+        android:layout_marginBottom="92dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/secondcard"
+        app:layout_constraintTop_toBottomOf="@+id/hitBtn"
+        app:layout_constraintVertical_bias="1.0">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/secondcard"
+        android:layout_width="124dp"
+        android:layout_height="211dp"
+        android:layout_marginEnd="128dp"
+        android:layout_marginBottom="92dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/firstcard"
+        app:layout_constraintTop_toBottomOf="@+id/hitBtn"
+        app:layout_constraintVertical_bias="1.0" >
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/firstcarbot"
+        android:layout_width="124dp"
+        android:layout_height="211dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.184" />
+
+    <Button
+        android:id="@+id/hitBtn"
+        android:onClick="onClickHit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="64dp"
+        android:text="@string/hit"
+    android:background="@drawable/button"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/standBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:onClick="onClickStand"
+        android:text="@string/stand"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/hitBtn"
+        app:layout_constraintHorizontal_bias="0.272"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/fourthcard"
+        android:layout_width="124dp"
+        android:layout_height="211dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/secondcard"
+        app:layout_constraintStart_toStartOf="@+id/firstcard"
+        app:layout_constraintTop_toBottomOf="@+id/standBtn"
+        app:layout_constraintVertical_bias="0.765"/>
+
+    <LinearLayout
+        android:id="@+id/fourthcardbot"
+        android:layout_width="124dp"
+        android:layout_height="211dp"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/firstcard"
+        app:layout_constraintEnd_toEndOf="@+id/thirdcardbot"
+        app:layout_constraintHorizontal_bias="0.231"
+        app:layout_constraintStart_toStartOf="@+id/firstcarbot"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.095" />
+
+    <LinearLayout
+        android:id="@+id/fifthcardbot"
+        android:layout_width="124dp"
+        android:layout_height="211dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/hitBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintStart_toEndOf="@+id/fourthcardbot"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/fifthcard"
+        android:layout_width="124dp"
+        android:layout_height="211dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fourthcard"
+        app:layout_constraintTop_toBottomOf="@+id/hitBtn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
