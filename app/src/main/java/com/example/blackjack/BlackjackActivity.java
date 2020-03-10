@@ -3,32 +3,29 @@ package com.example.blackjack;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
 public class BlackjackActivity extends AppCompatActivity {
     int hand_player;
     int hand_dealer;
-    LinearLayout firstcard;
-    LinearLayout secondcard;
-    LinearLayout thirdcard;
-    LinearLayout fourthcard;
-    LinearLayout fifthcard;
-    LinearLayout firstcardbot;
-    LinearLayout secondcardbot;
-    LinearLayout thirdcardbot;
-    LinearLayout fourthcardbot;
-    LinearLayout fifthcardbot;
+    ImageView firstcard;
+    ImageView secondcard;
+    ImageView thirdcard;
+    ImageView fourthcard;
+    ImageView fifthcard;
+    ImageView firstcardbot;
+    ImageView secondcardbot;
+    ImageView thirdcardbot;
+    ImageView fourthcardbot;
+    ImageView fifthcardbot;
     int eventCount;
     int win;
     int lose;
@@ -56,20 +53,23 @@ public class BlackjackActivity extends AppCompatActivity {
         thirdcardbot = findViewById(R.id.thirdcardbot);
         fourthcardbot = findViewById(R.id.fourthcardbot);
         fifthcardbot = findViewById(R.id.fifthcardbot);
-
+        username = bundle.getString("username");
+        newGame();
+    }
+    public void newGame(){
+        initVariables();
+        addCard();
+        setScore();
+    }
+    public void initVariables(){
         win = 0;
         lose = 0 ;
-        username = bundle.getString("username");
         eventCount = 0;
         cardMap = new HashMap<>();
         cardValueMap = new HashMap<>();
-
-        initDeck();
         hand_dealer = 0;
         hand_player = 0;
-
-        addCard();
-        setScore();
+        initDeck();
     }
     public void onClickLogout(View v){
         finish();
@@ -116,12 +116,6 @@ public class BlackjackActivity extends AppCompatActivity {
         Log.i("random",""+ rand1) ;
         return rand1;
     }
-    public int getRandomFigures(){
-        Random rand = new Random();
-        int rand1 = rand.nextInt(3);
-        Log.i("randomFigures",""+ rand1) ;
-        return rand1;
-    }
     public void onClickHit(View v){
         switch (eventCount){
             case 0:
@@ -145,29 +139,31 @@ public class BlackjackActivity extends AppCompatActivity {
         }
 
     }
-    public void addCardPlayerToScreen(LinearLayout card, String cardname){
-        ImageView cardImage = new ImageView(this);
-        hand_player += cardValueMap.get(cardname);
-        cardImage.setImageResource(getResources().getIdentifier(cardname,"drawable",BlackjackActivity.this.getPackageName()));
-        card.addView(cardImage);
+    public void addCardPlayerToScreen(ImageView card, String cardname){
+        int temp = cardValueMap.get(cardname);
+        Log.i("teste addCardPlayer", ""+temp);
+        if(temp == 1 && hand_player < 21){
+            hand_player += cardValueMap.get(cardname) + 10;
+        }else
+            hand_player += cardValueMap.get(cardname);
+        card.setImageResource(getResources().getIdentifier(cardname,"drawable",BlackjackActivity.this.getPackageName()));
     }
     public void addCard(){
         addCardPlayerToScreen(firstcard,cardMap.get(getRandom()));
         addCardPlayerToScreen(secondcard,cardMap.get(getRandom()));
         addCardBotToScreen(firstcardbot,cardMap.get(getRandom()));
         addCardBotToScreen(secondcardbot,cardMap.get(getRandom()));
-        checkSum();
     }
-    public void addCardBotToScreen(LinearLayout card, String temp_card){
-        ImageView cardImage = new ImageView(this);
-        String cardname;
-        hand_dealer += cardValueMap.get(temp_card);
+    public void addCardBotToScreen(ImageView card, String cardname){
+        int temp = cardValueMap.get(cardname);
+        if(temp == 1 && hand_dealer < 21){
+            hand_dealer += cardValueMap.get(cardname) + 10;
+        }else
+            hand_dealer += cardValueMap.get(cardname);
         cardname = "yellow_back";
-        cardImage.setImageResource(getResources().getIdentifier(cardname,"drawable",BlackjackActivity.this.getPackageName()));
-        card.addView(cardImage);
+        card.setImageResource(getResources().getIdentifier(cardname,"drawable",BlackjackActivity.this.getPackageName()));
     }
     public void checkWinner(){
-
         if (hand_player > 21 && hand_dealer < 21) {
             Toast.makeText(BlackjackActivity.this, "DEFEAT! " + hand_dealer + " -  " + hand_player, Toast.LENGTH_LONG).show();
             lose++;
@@ -201,6 +197,9 @@ public class BlackjackActivity extends AppCompatActivity {
             setScore();
         }else
             Toast.makeText(BlackjackActivity.this, "" + hand_player, Toast.LENGTH_LONG).show();
+    }
 
+    public void onClickNewGame(View view) {
+        newGame();
     }
 }

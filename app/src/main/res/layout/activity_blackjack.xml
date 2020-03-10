@@ -9,19 +9,18 @@
     android:background="@drawable/background1">
 
 
-    <LinearLayout
+    <ImageView
         android:id="@+id/thirdcardbot"
         android:layout_width="124dp"
         android:layout_height="211dp"
-        android:layout_marginStart="148dp"
+        android:layout_marginStart="144dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/standBtn"
         app:layout_constraintStart_toEndOf="@+id/firstcarbot"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.739" />
+        app:layout_constraintVertical_bias="0.557" />
 
-
-    <LinearLayout
+    <ImageView
         android:id="@+id/secondcarbot"
         android:layout_width="124dp"
         android:layout_height="211dp"
@@ -29,24 +28,24 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/standBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toEndOf="@+id/firstcarbot"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.595" />
+        app:layout_constraintVertical_bias="0.557" />
 
-    <LinearLayout
+    <ImageView
         android:id="@+id/firstcard"
         android:layout_width="124dp"
         android:layout_height="211dp"
-        android:layout_marginTop="436dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.034"
+        app:layout_constraintHorizontal_bias="0.108"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.823" />
 
-
-    <LinearLayout
+    <ImageView
         android:id="@+id/thirdcard"
         android:layout_width="124dp"
         android:layout_height="211dp"
@@ -57,9 +56,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/secondcard"
         app:layout_constraintTop_toBottomOf="@+id/hitBtn"
-        app:layout_constraintVertical_bias="1.0"/>
+        app:layout_constraintVertical_bias="1.0" />
 
-    <LinearLayout
+    <ImageView
         android:id="@+id/secondcard"
         android:layout_width="124dp"
         android:layout_height="211dp"
@@ -68,31 +67,31 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toEndOf="@+id/firstcard"
         app:layout_constraintTop_toBottomOf="@+id/hitBtn"
         app:layout_constraintVertical_bias="1.0" />
 
-    <LinearLayout
+    <ImageView
         android:id="@+id/firstcarbot"
         android:layout_width="124dp"
         android:layout_height="211dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.055"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.184" />
+        app:layout_constraintVertical_bias="0.14" />
 
     <Button
         android:id="@+id/hitBtn"
-        android:onClick="onClickHit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:text="@string/hit"
+        android:layout_marginEnd="12dp"
         android:background="@drawable/button"
+        android:onClick="onClickHit"
+        android:text="@string/hit"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -112,54 +111,73 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <ImageView
         android:id="@+id/fourthcard"
         android:layout_width="124dp"
         android:layout_height="211dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/secondcard"
+        app:layout_constraintHorizontal_bias="0.227"
         app:layout_constraintStart_toStartOf="@+id/firstcard"
         app:layout_constraintTop_toBottomOf="@+id/standBtn"
-        app:layout_constraintVertical_bias="0.765"/>
+        app:layout_constraintVertical_bias="0.684" />
 
-    <LinearLayout
+
+    <ImageView
         android:id="@+id/fourthcardbot"
         android:layout_width="124dp"
         android:layout_height="211dp"
         android:layout_marginTop="16dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/firstcard"
-        app:layout_constraintEnd_toEndOf="@+id/thirdcardbot"
-        app:layout_constraintHorizontal_bias="0.231"
+        app:layout_constraintEnd_toStartOf="@+id/thirdcardbot"
+        app:layout_constraintHorizontal_bias="0.402"
         app:layout_constraintStart_toStartOf="@+id/firstcarbot"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.095" />
+        app:layout_constraintVertical_bias="0.462" />
 
-    <LinearLayout
+    <ImageView
         android:id="@+id/fifthcardbot"
-        android:layout_width="124dp"
-        android:layout_height="211dp"
+        android:layout_width="132dp"
+        android:layout_height="218dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/hitBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
+        app:layout_constraintHorizontal_bias="0.146"
         app:layout_constraintStart_toEndOf="@+id/fourthcardbot"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.832" />
 
-
-    <LinearLayout
+    <ImageView
         android:id="@+id/fifthcard"
         android:layout_width="124dp"
         android:layout_height="211dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/fourthcard"
-        app:layout_constraintTop_toBottomOf="@+id/hitBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/hitBtn"
+        app:layout_constraintVertical_bias="0.684" />
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
+
+    <Button
+        android:id="@+id/newgame"
+        android:onClick="onClickNewGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/newgame"
+        android:textColor="@color/white"
+        android:background="@color/red"
+        app:layout_constraintBottom_toTopOf="@+id/secondcard"
+        app:layout_constraintEnd_toStartOf="@+id/hitBtn"
+        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintStart_toEndOf="@+id/standBtn"
+        app:layout_constraintTop_toBottomOf="@+id/secondcarbot"
+        app:layout_constraintVertical_bias="0.582" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

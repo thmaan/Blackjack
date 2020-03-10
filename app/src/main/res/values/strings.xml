@@ -2,7 +2,7 @@
     <string name="app_name">Blackjack</string>
     <string name="notmember">You are not a member?</string>
     <string name="register">Register</string>
-    <string name="login">Login</string>
+    <string name="login">Sign In</string>
     <string name="welcome">Welcome!</string>
     <string name="seeyouagain">Nice to se you again!</string>
     <string name="email">Email Adress</string>
@@ -16,4 +16,5 @@
     <string name="showpassword">Show Password</string>
     <string name="hit">Hit!</string>
     <string name="stand">Stand!</string>
+    <string name="newgame">New Game</string>
 </resources>
