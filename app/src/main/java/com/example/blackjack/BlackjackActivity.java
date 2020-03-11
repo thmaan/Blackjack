@@ -75,8 +75,9 @@ public class BlackjackActivity extends AppCompatActivity {
     }
     public void newGame(){
         initVariables();
-        addCard();
         setScore();
+        addCard();
+
     }
     public void initVariables(){
 
@@ -173,7 +174,7 @@ public class BlackjackActivity extends AppCompatActivity {
     }
     public void setScore(){
         @SuppressLint("WrongConstant") SharedPreferences sh = getSharedPreferences("users", MODE_APPEND );
-        scoreboard.setText( R.string.hello + sh.getString("username","") + R.string.win + sh.getInt("win",0) + R.string.lose + sh.getInt("lose",0));
+        scoreboard.setText("Hello " + sh.getString("username","") + "Win: "+ sh.getInt("win",0) +" Lose: " + sh.getInt("lose",0));
     }
     public  int getRandom() {
         Random rand = new Random();
@@ -271,27 +272,24 @@ public class BlackjackActivity extends AppCompatActivity {
                 Toast.makeText(BlackjackActivity.this, "DEFEAT! " + hand_dealer + " -  " + hand_player, Toast.LENGTH_LONG).show();
                 lose++;
                 return;
-            }else {
+            }else
                 Toast.makeText(BlackjackActivity.this, "DRAW! " + hand_player + " - " + hand_dealer, Toast.LENGTH_LONG).show();
-        }
         setScore();
     }
     public void addCardBot(){
         addCardBotToScreen(firstcardbot,cardMap.get(getRandom()));
         addCardBotToScreen(secondcardbot,cardMap.get(getRandom()));
-        if(hand_dealer == 21 ) {
-            lose++;
-            Toast.makeText(BlackjackActivity.this, "DEALER GOT A BLACKJACK", Toast.LENGTH_LONG).show();
-        }else
-            if(hand_dealer > 18) {
+        while(true) {
+            if (hand_dealer == 21) {
+                lose++;
+                Toast.makeText(BlackjackActivity.this, "DEALER GOT A BLACKJACK", Toast.LENGTH_LONG).show();
+                break;
+            } else if (hand_dealer >= 18) {
                 onClickStandBot();
-            }else while (hand_dealer <= 17){
-                    onClickHitBot();
-                    if(hand_dealer > 17){
-                        onClickStandBot();
-                    }
-                }
-
+                break;
+            } else
+                onClickHitBot();
+        }
     }
     public void onClickHitBot(){
         switch (eventCountBot){
