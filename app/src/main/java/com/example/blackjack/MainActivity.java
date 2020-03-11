@@ -22,37 +22,8 @@ public class MainActivity extends AppCompatActivity {
         }
         startActivity(intent);
     }
-    @Override
-    protected void onStart() {
-        Log.i("Aula02","Main Activity onStart");
-        super.onStart();
-    }
-    public void onClickRegister(View v){
+        public void onClickRegister(View v){
         Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
         startActivity(intent);
-    }
-
-    @Override
-    protected void onPostResume() {
-        Log.i("Aula02","Main Activity onResume");
-        super.onPostResume();
-    }
-
-    @Override
-    protected void onPause() {
-        Log.i("Aula02","Main Activity onPause");
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        Log.i("Aula02","Main Activity onStop");
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        Log.i("Aula02","Main Activity onDestroy");
-        super.onDestroy();
     }
 }

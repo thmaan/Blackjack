@@ -2,7 +2,9 @@ package com.example.blackjack;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -51,19 +53,22 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     public void onClickLogin(View v) {
-
-        Bundle bundle = getIntent().getExtras();
+        SharedPreferences sharedPreferences = getSharedPreferences("users", MODE_PRIVATE);
+        @SuppressLint("WrongConstant") SharedPreferences sh = getSharedPreferences("users", MODE_APPEND);
         try {
-            String user ="" + bundle.getString("username");
-            Log.i("testeLogin",user);
-            String password = "" + bundle.getString("password");
-            String email = "" + bundle.getString("email");
-            String name = "" + bundle.getString("name");
+            String user ="" + sh.getString("username","");
+            String password = "" + sh.getString("password","");
+            String email = "" + sh.getString("email","");
+            String name = "" + sh.getString("name","");
+            SharedPreferences.Editor myEditor = sharedPreferences.edit();
+            myEditor.putString("username",user);
+            myEditor.putString("password",password);
+            myEditor.putString("email",email);
+            myEditor.putString("name",name);
             if(user.equals(usernameText.getText().toString())){
                 if(password.equals(passwordText.getText().toString())){
-                    Log.i("teste1","PQ");
+                    myEditor.commit();
                     Intent intent = new Intent(this, BlackjackActivity.class);
-                    intent.putExtras(bundle);
                     startActivity(intent);
                 }else
                     Toast.makeText(this,"Password Incorrect",Toast.LENGTH_LONG).show();
@@ -72,8 +77,6 @@ public class LoginActivity extends AppCompatActivity {
 
         }catch (NullPointerException e){
             Toast.makeText(this,"Authentication Failed",Toast.LENGTH_LONG).show();
-             bundle = getIntent().getExtras();
-
         }
     }
 

@@ -1,8 +1,11 @@
 package com.example.blackjack;
 
+import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +29,10 @@ public class BlackjackActivity extends AppCompatActivity {
     ImageView thirdcardbot;
     ImageView fourthcardbot;
     ImageView fifthcardbot;
+    ImageView sixthcard;
+    ImageView sixthcardbot;
     int eventCount;
+    int eventCountBot;
     int win;
     int lose;
     String username;
@@ -34,26 +40,39 @@ public class BlackjackActivity extends AppCompatActivity {
     TextView scoreboard;
     HashMap<Integer,String> cardMap;
     HashMap<String, Integer> cardValueMap;
+    boolean firstaceplayer;
+    boolean firstacebot;
+    Button stnButton;
+    Button hitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blackjack);
-        Bundle bundle = getIntent().getExtras();
+        SharedPreferences sharedPreferences = getSharedPreferences("users", MODE_PRIVATE);
+        SharedPreferences.Editor myEditor = sharedPreferences.edit();
+        myEditor.commit();
+        @SuppressLint("WrongConstant") SharedPreferences sh = getSharedPreferences("users", MODE_APPEND);
+        win = sh.getInt("win",-500);
+        lose = sh.getInt("lose",-10);
+        username = sh.getString("username","");
         firstcard = findViewById(R.id.firstcard);
         secondcard = findViewById(R.id.secondcard);
         thirdcard = findViewById(R.id.thirdcard);
         fourthcard = findViewById(R.id.fourthcard);
         fifthcard = findViewById(R.id.fifthcard);
-        toolbar = findViewById(R.id.toolbar);
-        scoreboard = findViewById(R.id.scoreboard);
-
-        firstcardbot = findViewById(R.id.firstcarbot);
-        secondcardbot = findViewById(R.id.secondcarbot);
+        sixthcard = findViewById(R.id.sixthcard);
+        firstcardbot = findViewById(R.id.firstcardbot);
+        secondcardbot = findViewById(R.id.secondcardbot);
         thirdcardbot = findViewById(R.id.thirdcardbot);
         fourthcardbot = findViewById(R.id.fourthcardbot);
         fifthcardbot = findViewById(R.id.fifthcardbot);
-        username = bundle.getString("username");
+        sixthcardbot = findViewById(R.id.sixthcardbot);
+        stnButton = findViewById(R.id.standBtn);
+        hitButton = findViewById(R.id.hitBtn);
+        toolbar = findViewById(R.id.toolbar);
+        scoreboard = findViewById(R.id.scoreboard);
+
         newGame();
     }
     public void newGame(){
@@ -62,9 +81,58 @@ public class BlackjackActivity extends AppCompatActivity {
         setScore();
     }
     public void initVariables(){
-        win = 0;
-        lose = 0 ;
+
+        stnButton.setClickable(true);
+        hitButton.setClickable(true);
+        firstcard.setEnabled(true);
+        firstcard.setImageDrawable(null);
+        firstcard.setVisibility(View.VISIBLE);
+
+        secondcard.setEnabled(true);
+        secondcard.setImageDrawable(null);
+        secondcard.setVisibility(View.VISIBLE);
+
+        thirdcard.setEnabled(true);
+        thirdcard.setImageDrawable(null);
+        thirdcard.setVisibility(View.VISIBLE);
+
+        fourthcard.setEnabled(true);
+        fourthcard.setImageDrawable(null);
+        fourthcard.setVisibility(View.VISIBLE);
+
+        fifthcard.setEnabled(true);
+        fifthcard.setImageDrawable(null);
+        fifthcard.setVisibility(View.VISIBLE);
+
+        sixthcard.setEnabled(true);
+        sixthcard.setImageDrawable(null);
+        sixthcard.setVisibility(View.VISIBLE);
+
+        firstcardbot.setEnabled(true);
+        secondcardbot.setEnabled(true);
+        thirdcardbot.setEnabled(true);
+        fourthcardbot.setEnabled(true);
+        fifthcardbot.setEnabled(true);
+        sixthcardbot.setEnabled(true);
+
+        firstcardbot.setImageDrawable(null);
+        secondcardbot.setImageDrawable(null);
+        thirdcardbot.setImageDrawable(null);
+        fourthcardbot.setImageDrawable(null);
+        fifthcardbot.setImageDrawable(null);
+        sixthcardbot.setImageDrawable(null);
+
+        firstaceplayer = false;
+        firstacebot = false;
+
+        SharedPreferences sharedPreferences = getSharedPreferences("users", MODE_PRIVATE);
+        SharedPreferences.Editor myEditor = sharedPreferences.edit();
+        myEditor.putInt("win", win);
+        myEditor.putInt("lose",lose);
+        myEditor.commit();
+
         eventCount = 0;
+        eventCountBot = 0;
         cardMap = new HashMap<>();
         cardValueMap = new HashMap<>();
         hand_dealer = 0;
@@ -74,7 +142,6 @@ public class BlackjackActivity extends AppCompatActivity {
     public void onClickLogout(View v){
         finish();
     }
-
     public void initDeck(){
 
         cardMap.put(1,"ace");
@@ -91,7 +158,7 @@ public class BlackjackActivity extends AppCompatActivity {
         cardMap.put(12,"queen");
         cardMap.put(13,"king");
 
-        cardValueMap.put("ace",1);
+        cardValueMap.put("ace",11);
         cardValueMap.put("two", 2);
         cardValueMap.put("three", 3);
         cardValueMap.put("four", 4);
@@ -107,9 +174,10 @@ public class BlackjackActivity extends AppCompatActivity {
 
     }
     public void setScore(){
-        scoreboard.setText("Hello " + username + " Win: " + win + " Lose: " + lose);
+        @SuppressLint("WrongConstant") SharedPreferences sh = getSharedPreferences("users", MODE_APPEND );
+        scoreboard.setText("Hello " + sh.getString("username","") + " Win: " + sh.getInt("win",0) + " Lose: " + sh.getInt("lose",0));
+        Log.i("teste score","" + sh.getInt("win",-1)+ " l:"+ sh.getInt("lose",-10));
     }
-
     public  int getRandom() {
         Random rand = new Random();
         int rand1 = rand.nextInt(13) + 1;
@@ -119,21 +187,19 @@ public class BlackjackActivity extends AppCompatActivity {
     public void onClickHit(View v){
         switch (eventCount){
             case 0:
-                addCardBotToScreen(thirdcardbot,cardMap.get(getRandom()));
                 addCardPlayerToScreen(thirdcard, cardMap.get(getRandom()));
-                checkSum();
                 eventCount++;
                 break;
             case 1:
-                addCardBotToScreen(fourthcardbot,cardMap.get(getRandom()));
                 addCardPlayerToScreen(fourthcard,cardMap.get(getRandom()));
-                checkSum();
                 eventCount++;
                 break;
             case 2:
-                addCardBotToScreen(fifthcardbot,cardMap.get(getRandom()));
                 addCardPlayerToScreen(fifthcard,cardMap.get(getRandom()));
-                checkSum();
+                eventCount++;
+                break;
+            case 3:
+                addCardPlayerToScreen(sixthcard,cardMap.get(getRandom()));
                 eventCount++;
                 break;
         }
@@ -141,64 +207,130 @@ public class BlackjackActivity extends AppCompatActivity {
     }
     public void addCardPlayerToScreen(ImageView card, String cardname){
         int temp = cardValueMap.get(cardname);
-        Log.i("teste addCardPlayer", ""+temp);
-        if(temp == 1 && hand_player < 21){
-            hand_player += cardValueMap.get(cardname) + 10;
-        }else
-            hand_player += cardValueMap.get(cardname);
+        if(temp == 1 && hand_player < 21 && firstaceplayer == false) {
+            hand_player += cardValueMap.get(cardname) + (checkAcePlayer() - 10);
+            firstaceplayer = true;
+        }else{
+            if(temp == 1 && hand_player < 21 && firstaceplayer){
+                hand_player += cardValueMap.get(cardname) + (checkAcePlayer() - 10);
+            }else{
+                hand_player += cardValueMap.get(cardname);
+            }
+        }
         card.setImageResource(getResources().getIdentifier(cardname,"drawable",BlackjackActivity.this.getPackageName()));
+    }
+    public void addCardBotToScreen(ImageView card, String cardname){
+        int temp = cardValueMap.get(cardname);
+        if(temp == 1 && hand_dealer < 21 && !firstacebot){
+            hand_dealer += cardValueMap.get(cardname) + (checkAceBot() - 10);
+            firstacebot = true;
+        }else{
+            if(temp == 1 && hand_dealer < 21 && firstacebot){
+                hand_dealer += cardValueMap.get(cardname) + (checkAceBot() - 10);
+            }else{
+                hand_dealer += cardValueMap.get(cardname);
+            }
+        }
+        card.setImageResource(getResources().getIdentifier(cardname,"drawable",BlackjackActivity.this.getPackageName()));
+    }
+    public int checkAcePlayer(){
+        if(this.hand_player + 1 == 21) {
+            return 1;
+        }
+        if(this.hand_player + 11 == 21) {
+            return 11;
+        }
+        if(this.hand_player + 11 > 21) {
+            return 1;
+        }else
+            return 11;
+    }
+    public int checkAceBot(){
+        if(this.hand_dealer + 1 == 21) {
+            return 1;
+        }
+        if(this.hand_dealer + 11 == 21) {
+            return 11;
+        }
+        if(this.hand_dealer + 11 > 21) {
+            return 1;
+        }else
+            return 11;
     }
     public void addCard(){
         addCardPlayerToScreen(firstcard,cardMap.get(getRandom()));
         addCardPlayerToScreen(secondcard,cardMap.get(getRandom()));
-        addCardBotToScreen(firstcardbot,cardMap.get(getRandom()));
-        addCardBotToScreen(secondcardbot,cardMap.get(getRandom()));
-    }
-    public void addCardBotToScreen(ImageView card, String cardname){
-        int temp = cardValueMap.get(cardname);
-        if(temp == 1 && hand_dealer < 21){
-            hand_dealer += cardValueMap.get(cardname) + 10;
-        }else
-            hand_dealer += cardValueMap.get(cardname);
-        cardname = "yellow_back";
-        card.setImageResource(getResources().getIdentifier(cardname,"drawable",BlackjackActivity.this.getPackageName()));
     }
     public void checkWinner(){
-        if (hand_player > 21 && hand_dealer < 21) {
-            Toast.makeText(BlackjackActivity.this, "DEFEAT! " + hand_dealer + " -  " + hand_player, Toast.LENGTH_LONG).show();
+        if(hand_player > 21) {
             lose++;
-            setScore();
-        }else
-            if(hand_dealer > 21 && hand_player < 21){
-                Toast.makeText(BlackjackActivity.this, "VICTORY! " + hand_player +" - " + hand_dealer, Toast.LENGTH_LONG).show();
+            Toast.makeText(BlackjackActivity.this, "DEFEAT! YOU BUSTED "  + hand_player, Toast.LENGTH_LONG).show();
+            return;
+        }else if (hand_dealer > 21) {
+                Toast.makeText(BlackjackActivity.this, "VICTORY! Dealer BUSTED " + hand_dealer, Toast.LENGTH_LONG).show();
                 win++;
-                setScore();
-            }else
-                if(hand_player > hand_dealer){
-                    Toast.makeText(BlackjackActivity.this, "VICTORY! " + hand_player +" - " + hand_dealer, Toast.LENGTH_LONG).show();
-                    win++;
-                    setScore();
-                }else {
-                    if (hand_player < hand_dealer) {
-                        Toast.makeText(BlackjackActivity.this, "DEFEAT! " + hand_dealer + " -  " + hand_player, Toast.LENGTH_LONG).show();
-                        lose++;
-                        setScore();
-                    } else
-                        Toast.makeText(BlackjackActivity.this, "DRAW! " + hand_player + " - " + hand_dealer, Toast.LENGTH_LONG).show();
+             return;
+            } else if (hand_dealer > 21 && hand_player > 21) {
+                Toast.makeText(BlackjackActivity.this, "DRAW! " + hand_player + " - " + hand_dealer, Toast.LENGTH_LONG).show();
+             return;
+            } else if (hand_player > hand_dealer) {
+                Toast.makeText(BlackjackActivity.this, "VICTORY! " + hand_player + " - " + hand_dealer, Toast.LENGTH_LONG).show();
+                win++;
+             return;
+            } else if (hand_player < hand_dealer) {
+                Toast.makeText(BlackjackActivity.this, "DEFEAT! " + hand_dealer + " -  " + hand_player, Toast.LENGTH_LONG).show();
+                lose++;
+                return;
+            }else {
+                Toast.makeText(BlackjackActivity.this, "DRAW! " + hand_player + " - " + hand_dealer, Toast.LENGTH_LONG).show();
+        }
+        setScore();
+    }
+    public void addCardBot(){
+        addCardBotToScreen(firstcardbot,cardMap.get(getRandom()));
+        addCardBotToScreen(secondcardbot,cardMap.get(getRandom()));
+        if(hand_dealer == 21 )
+            checkWinner();
+        else
+            if(hand_dealer > 18)
+                onClickStandBot();
+            else {
+                while (hand_dealer <= 17) {
+                    onClickHitBot();
+                    if (hand_dealer >= 17) {
+                        onClickStandBot();
+                    }
                 }
+            }
+    }
+    public void onClickHitBot(){
+        switch (eventCountBot){
+            case 0:
+                addCardBotToScreen(thirdcardbot, cardMap.get(getRandom()));
+                eventCountBot++;
+                break;
+            case 1:
+                addCardBotToScreen(fourthcardbot,cardMap.get(getRandom()));
+                eventCountBot++;
+                break;
+            case 2:
+                addCardBotToScreen(fifthcardbot,cardMap.get(getRandom()));
+                eventCountBot++;
+                break;
+            case 3:
+                addCardBotToScreen(sixthcardbot,cardMap.get(getRandom()));
+                eventCountBot++;
+                break;
+        }
     }
     public void onClickStand(View v){
+        stnButton.setClickable(false);
+        hitButton.setClickable(false);
+        addCardBot();
+    }
+    public void onClickStandBot(){
         checkWinner();
     }
-    public void checkSum() {
-        if (hand_player > 21) {
-            Toast.makeText(BlackjackActivity.this, "DEFEAT! " + hand_player, Toast.LENGTH_SHORT).show();
-            lose++;
-            setScore();
-        }else
-            Toast.makeText(BlackjackActivity.this, "" + hand_player, Toast.LENGTH_LONG).show();
-    }
-
     public void onClickNewGame(View view) {
         newGame();
     }
