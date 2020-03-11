@@ -17,4 +17,6 @@
     <string name="hit">Hit!</string>
     <string name="stand">Stand!</string>
     <string name="newgame">New Game</string>
+    <string name="win">win</string>
+    <string name="lose">lose</string>
 </resources>

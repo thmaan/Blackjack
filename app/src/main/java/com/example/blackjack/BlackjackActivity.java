@@ -43,14 +43,13 @@ public class BlackjackActivity extends AppCompatActivity {
     int acebot;
     Button stnButton;
     Button hitButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blackjack);
         SharedPreferences sharedPreferences = getSharedPreferences("users", MODE_PRIVATE);
         SharedPreferences.Editor myEditor = sharedPreferences.edit();
-        myEditor.commit();
+        myEditor.apply();
         @SuppressLint("WrongConstant") SharedPreferences sh = getSharedPreferences("users", MODE_APPEND);
         win = sh.getInt("win",-500);
         lose = sh.getInt("lose",-10);
@@ -128,7 +127,7 @@ public class BlackjackActivity extends AppCompatActivity {
         SharedPreferences.Editor myEditor = sharedPreferences.edit();
         myEditor.putInt("win", win);
         myEditor.putInt("lose",lose);
-        myEditor.commit();
+        myEditor.apply();
 
         eventCount = 0;
         eventCountBot = 0;
@@ -174,11 +173,12 @@ public class BlackjackActivity extends AppCompatActivity {
     }
     public void setScore(){
         @SuppressLint("WrongConstant") SharedPreferences sh = getSharedPreferences("users", MODE_APPEND );
-        scoreboard.setText("Hello " + sh.getString("username","") + " Win: " + sh.getInt("win",0) + " Lose: " + sh.getInt("lose",0));
+        scoreboard.setText( R.string.hello + sh.getString("username","") + R.string.win + sh.getInt("win",0) + R.string.lose + sh.getInt("lose",0));
     }
     public  int getRandom() {
         Random rand = new Random();
-        int rand1 = rand.nextInt(13) + 1;
+        int rand1;
+        rand1= rand.nextInt(13) + 1;
         return rand1;
     }
     public void onClickHit(View v){
@@ -219,7 +219,7 @@ public class BlackjackActivity extends AppCompatActivity {
         if(temp == 1 && hand_dealer < 21 && acebot == 0){
             hand_dealer += checkAceBot();
             acebot++;
-        }else if( temp == 1 && hand_dealer < 21 && acebot >0){
+        }else if( temp == 1 && hand_dealer < 21 && acebot > 0){
             hand_dealer = + 1 - 10 ;
         }else{
             hand_dealer += cardValueMap.get(cardname);
@@ -249,6 +249,10 @@ public class BlackjackActivity extends AppCompatActivity {
     public void addCard(){
         addCardPlayerToScreen(firstcard,cardMap.get(getRandom()));
         addCardPlayerToScreen(secondcard,cardMap.get(getRandom()));
+        if(hand_dealer == 21 ) {
+            win++;
+            Toast.makeText(BlackjackActivity.this, "YOU GOT A BLACKJACK", Toast.LENGTH_LONG).show();
+        }
     }
     public void checkWinner(){
         if(hand_player > 21) {
@@ -258,9 +262,6 @@ public class BlackjackActivity extends AppCompatActivity {
         }else if (hand_dealer > 21) {
                 Toast.makeText(BlackjackActivity.this, "VICTORY! Dealer BUSTED " + hand_dealer, Toast.LENGTH_LONG).show();
                 win++;
-             return;
-            } else if (hand_dealer > 21 && hand_player > 21) {
-                Toast.makeText(BlackjackActivity.this, "DRAW! " + hand_player + " - " + hand_dealer, Toast.LENGTH_LONG).show();
              return;
             } else if (hand_player > hand_dealer) {
                 Toast.makeText(BlackjackActivity.this, "VICTORY! " + hand_player + " - " + hand_dealer, Toast.LENGTH_LONG).show();
@@ -280,7 +281,7 @@ public class BlackjackActivity extends AppCompatActivity {
         addCardBotToScreen(secondcardbot,cardMap.get(getRandom()));
         if(hand_dealer == 21 ) {
             lose++;
-            Toast.makeText(BlackjackActivity.this, "DEFEAT! YOU BUSTED " + hand_player, Toast.LENGTH_LONG).show();
+            Toast.makeText(BlackjackActivity.this, "DEALER GOT A BLACKJACK", Toast.LENGTH_LONG).show();
         }else
             if(hand_dealer > 18) {
                 onClickStandBot();
