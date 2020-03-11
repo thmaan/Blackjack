@@ -157,7 +157,7 @@ public class BlackjackActivity extends AppCompatActivity {
         cardMap.put(12,"queen");
         cardMap.put(13,"king");
 
-        cardValueMap.put("ace",11);
+        cardValueMap.put("ace",1);
         cardValueMap.put("two", 2);
         cardValueMap.put("three", 3);
         cardValueMap.put("four", 4);
@@ -205,25 +205,31 @@ public class BlackjackActivity extends AppCompatActivity {
     }
     public void addCardPlayerToScreen(ImageView card, String cardname){
         int temp = cardValueMap.get(cardname);
-        if(temp == 1 && hand_player < 21 && aceplayer == 0) {
+        if(temp == 1 && aceplayer == 0) {
             hand_player += checkAcePlayer();
             aceplayer++;
-        }else if(temp == 1 && hand_player < 21 && aceplayer > 0) {
+        }else if(temp == 1 && aceplayer > 0) {
             hand_player += +1 - 10;
         }else {
             hand_player += cardValueMap.get(cardname);
+        }
+        if(hand_player > 21 && aceplayer > 0){
+            hand_player  = hand_player - 10;
         }
         card.setImageResource(getResources().getIdentifier(cardname,"drawable",BlackjackActivity.this.getPackageName()));
     }
     public void addCardBotToScreen(ImageView card, String cardname){
         int temp = cardValueMap.get(cardname);
-        if(temp == 1 && hand_dealer < 21 && acebot == 0){
+        if(temp == 1 && acebot == 0){
             hand_dealer += checkAceBot();
             acebot++;
-        }else if( temp == 1 && hand_dealer < 21 && acebot > 0){
+        }else if( temp == 1 && acebot > 0){
             hand_dealer = + 1 - 10 ;
         }else{
             hand_dealer += cardValueMap.get(cardname);
+        }
+        if(hand_dealer > 21 && acebot > 0) {
+            hand_dealer = hand_dealer - 10;
         }
         card.setImageResource(getResources().getIdentifier(cardname,"drawable",BlackjackActivity.this.getPackageName()));
     }
@@ -258,7 +264,7 @@ public class BlackjackActivity extends AppCompatActivity {
     public void checkWinner(){
         if(hand_player > 21) {
             lose++;
-            Toast.makeText(BlackjackActivity.this, "DEFEAT! YOU BUSTED "  + hand_player, Toast.LENGTH_LONG).show();
+            Toast.makeText(BlackjackActivity.this, "DEFEAT! YOU BUSTED "  + hand_player  +" ace value: " + aceplayer, Toast.LENGTH_LONG).show();
             return;
         }else if (hand_dealer > 21) {
                 Toast.makeText(BlackjackActivity.this, "VICTORY! Dealer BUSTED " + hand_dealer, Toast.LENGTH_LONG).show();
