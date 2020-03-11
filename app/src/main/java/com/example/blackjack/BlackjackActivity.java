@@ -3,7 +3,6 @@ package com.example.blackjack;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -40,8 +39,8 @@ public class BlackjackActivity extends AppCompatActivity {
     TextView scoreboard;
     HashMap<Integer,String> cardMap;
     HashMap<String, Integer> cardValueMap;
-    boolean firstaceplayer;
-    boolean firstacebot;
+    int aceplayer;
+    int acebot;
     Button stnButton;
     Button hitButton;
 
@@ -122,8 +121,8 @@ public class BlackjackActivity extends AppCompatActivity {
         fifthcardbot.setImageDrawable(null);
         sixthcardbot.setImageDrawable(null);
 
-        firstaceplayer = false;
-        firstacebot = false;
+        aceplayer = 0;
+        acebot = 0;
 
         SharedPreferences sharedPreferences = getSharedPreferences("users", MODE_PRIVATE);
         SharedPreferences.Editor myEditor = sharedPreferences.edit();
@@ -176,12 +175,10 @@ public class BlackjackActivity extends AppCompatActivity {
     public void setScore(){
         @SuppressLint("WrongConstant") SharedPreferences sh = getSharedPreferences("users", MODE_APPEND );
         scoreboard.setText("Hello " + sh.getString("username","") + " Win: " + sh.getInt("win",0) + " Lose: " + sh.getInt("lose",0));
-        Log.i("teste score","" + sh.getInt("win",-1)+ " l:"+ sh.getInt("lose",-10));
     }
     public  int getRandom() {
         Random rand = new Random();
         int rand1 = rand.nextInt(13) + 1;
-        Log.i("random",""+ rand1) ;
         return rand1;
     }
     public void onClickHit(View v){
@@ -207,40 +204,34 @@ public class BlackjackActivity extends AppCompatActivity {
     }
     public void addCardPlayerToScreen(ImageView card, String cardname){
         int temp = cardValueMap.get(cardname);
-        if(temp == 1 && hand_player < 21 && firstaceplayer == false) {
-            hand_player += cardValueMap.get(cardname) + (checkAcePlayer() - 10);
-            firstaceplayer = true;
-        }else{
-            if(temp == 1 && hand_player < 21 && firstaceplayer){
-                hand_player += cardValueMap.get(cardname) + (checkAcePlayer() - 10);
-            }else{
-                hand_player += cardValueMap.get(cardname);
-            }
+        if(temp == 1 && hand_player < 21 && aceplayer == 0) {
+            hand_player += checkAcePlayer();
+            aceplayer++;
+        }else if(temp == 1 && hand_player < 21 && aceplayer > 0) {
+            hand_player += +1 - 10;
+        }else {
+            hand_player += cardValueMap.get(cardname);
         }
         card.setImageResource(getResources().getIdentifier(cardname,"drawable",BlackjackActivity.this.getPackageName()));
     }
     public void addCardBotToScreen(ImageView card, String cardname){
         int temp = cardValueMap.get(cardname);
-        if(temp == 1 && hand_dealer < 21 && !firstacebot){
-            hand_dealer += cardValueMap.get(cardname) + (checkAceBot() - 10);
-            firstacebot = true;
+        if(temp == 1 && hand_dealer < 21 && acebot == 0){
+            hand_dealer += checkAceBot();
+            acebot++;
+        }else if( temp == 1 && hand_dealer < 21 && acebot >0){
+            hand_dealer = + 1 - 10 ;
         }else{
-            if(temp == 1 && hand_dealer < 21 && firstacebot){
-                hand_dealer += cardValueMap.get(cardname) + (checkAceBot() - 10);
-            }else{
-                hand_dealer += cardValueMap.get(cardname);
-            }
+            hand_dealer += cardValueMap.get(cardname);
         }
         card.setImageResource(getResources().getIdentifier(cardname,"drawable",BlackjackActivity.this.getPackageName()));
     }
     public int checkAcePlayer(){
         if(this.hand_player + 1 == 21) {
             return 1;
-        }
-        if(this.hand_player + 11 == 21) {
+        }else if(this.hand_player + 11 == 21) {
             return 11;
-        }
-        if(this.hand_player + 11 > 21) {
+        }else if(this.hand_player + 11 > 21) {
             return 1;
         }else
             return 11;
@@ -248,11 +239,9 @@ public class BlackjackActivity extends AppCompatActivity {
     public int checkAceBot(){
         if(this.hand_dealer + 1 == 21) {
             return 1;
-        }
-        if(this.hand_dealer + 11 == 21) {
+        }else if(this.hand_dealer + 11 == 21) {
             return 11;
-        }
-        if(this.hand_dealer + 11 > 21) {
+        }else if(this.hand_dealer + 11 > 21) {
             return 1;
         }else
             return 11;
@@ -289,19 +278,19 @@ public class BlackjackActivity extends AppCompatActivity {
     public void addCardBot(){
         addCardBotToScreen(firstcardbot,cardMap.get(getRandom()));
         addCardBotToScreen(secondcardbot,cardMap.get(getRandom()));
-        if(hand_dealer == 21 )
-            checkWinner();
-        else
-            if(hand_dealer > 18)
+        if(hand_dealer == 21 ) {
+            lose++;
+            Toast.makeText(BlackjackActivity.this, "DEFEAT! YOU BUSTED " + hand_player, Toast.LENGTH_LONG).show();
+        }else
+            if(hand_dealer > 18) {
                 onClickStandBot();
-            else {
-                while (hand_dealer <= 17) {
+            }else while (hand_dealer <= 17){
                     onClickHitBot();
-                    if (hand_dealer >= 17) {
+                    if(hand_dealer > 17){
                         onClickStandBot();
                     }
                 }
-            }
+
     }
     public void onClickHitBot(){
         switch (eventCountBot){

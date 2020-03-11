@@ -159,10 +159,10 @@
         android:layout_marginStart="208dp"
         app:layout_constraintBottom_toTopOf="@+id/hitBtn"
         app:layout_constraintEnd_toEndOf="@+id/firstcardbot"
-        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.16"
+        app:layout_constraintVertical_bias="0.155"
         app:srcCompat="@drawable/ace" />
 
     <ImageView
@@ -171,10 +171,10 @@
         android:layout_height="163dp"
         app:layout_constraintBottom_toTopOf="@+id/hitBtn"
         app:layout_constraintEnd_toEndOf="@+id/firstcardbot"
-        app:layout_constraintHorizontal_bias="0.671"
+        app:layout_constraintHorizontal_bias="0.549"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.181"
+        app:layout_constraintVertical_bias="0.155"
         app:srcCompat="@drawable/ace" />
 
     <ImageView
@@ -183,10 +183,10 @@
         android:layout_height="163dp"
         app:layout_constraintBottom_toTopOf="@+id/hitBtn"
         app:layout_constraintEnd_toEndOf="@+id/firstcardbot"
-        app:layout_constraintHorizontal_bias="0.549"
+        app:layout_constraintHorizontal_bias="0.316"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.147"
+        app:layout_constraintVertical_bias="0.155"
         app:srcCompat="@drawable/ace" />
 
     <ImageView
@@ -195,10 +195,10 @@
         android:layout_height="163dp"
         app:layout_constraintBottom_toTopOf="@+id/hitBtn"
         app:layout_constraintEnd_toEndOf="@+id/firstcardbot"
-        app:layout_constraintHorizontal_bias="0.434"
+        app:layout_constraintHorizontal_bias="0.156"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.157"
+        app:layout_constraintVertical_bias="0.147"
         app:srcCompat="@drawable/ace" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
