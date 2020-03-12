@@ -76,7 +76,7 @@ public class BlackjackActivity extends AppCompatActivity {
     public void newGame(){
         initVariables();
         setScore();
-        addCard();
+        startGame();
 
     }
     public void initVariables(){
@@ -183,83 +183,76 @@ public class BlackjackActivity extends AppCompatActivity {
         return rand1;
     }
     public void onClickHit(View v){
-        switch (eventCount){
-            case 0:
-                addCardPlayerToScreen(thirdcard, cardMap.get(getRandom()));
-                eventCount++;
-                break;
-            case 1:
-                addCardPlayerToScreen(fourthcard,cardMap.get(getRandom()));
-                eventCount++;
-                break;
-            case 2:
-                addCardPlayerToScreen(fifthcard,cardMap.get(getRandom()));
-                eventCount++;
-                break;
-            case 3:
-                addCardPlayerToScreen(sixthcard,cardMap.get(getRandom()));
-                eventCount++;
-                break;
+        if(hand_player > 21){
+            Toast.makeText(BlackjackActivity.this, "DEFEAT! YOU BUSTED "  + hand_player  +" ace value: " + aceplayer, Toast.LENGTH_LONG).show();
+            lose++;
+        }else
+            switch (eventCount){
+                case 0:
+                    addCardPlayerToScreen(thirdcard, cardMap.get(getRandom()));
+                    eventCount++;
+                    break;
+                case 1:
+                    addCardPlayerToScreen(fourthcard,cardMap.get(getRandom()));
+                    eventCount++;
+                    break;
+                case 2:
+                    addCardPlayerToScreen(fifthcard,cardMap.get(getRandom()));
+                    eventCount++;
+                    break;
+                case 3:
+                    addCardPlayerToScreen(sixthcard,cardMap.get(getRandom()));
+                    eventCount++;
+                    break;
         }
 
     }
     public void addCardPlayerToScreen(ImageView card, String cardname){
         int temp = cardValueMap.get(cardname);
         if(temp == 1 && aceplayer == 0) {
-            hand_player += checkAcePlayer();
+            hand_player += 11;
             aceplayer++;
         }else if(temp == 1 && aceplayer > 0) {
-            hand_player += +1 - 10;
+            hand_player += +11 - 10;
         }else {
             hand_player += cardValueMap.get(cardname);
         }
-        if(hand_player > 21 && aceplayer > 0){
-            hand_player  = hand_player - 10;
+        if(hand_player > 21 && aceplayer >= 1){
+            while(aceplayer > 0) {
+                hand_player = hand_player - 10;
+                aceplayer--;
+            }
         }
         card.setImageResource(getResources().getIdentifier(cardname,"drawable",BlackjackActivity.this.getPackageName()));
     }
     public void addCardBotToScreen(ImageView card, String cardname){
         int temp = cardValueMap.get(cardname);
         if(temp == 1 && acebot == 0){
-            hand_dealer += checkAceBot();
+            hand_dealer += 11;
             acebot++;
         }else if( temp == 1 && acebot > 0){
             hand_dealer = + 1 - 10 ;
         }else{
             hand_dealer += cardValueMap.get(cardname);
         }
-        if(hand_dealer > 21 && acebot > 0) {
-            hand_dealer = hand_dealer - 10;
+        if(hand_dealer > 21 && acebot >= 1) {
+            while (acebot>0) {
+                hand_dealer = hand_dealer - 10;
+                acebot--;
+            }
         }
         card.setImageResource(getResources().getIdentifier(cardname,"drawable",BlackjackActivity.this.getPackageName()));
     }
-    public int checkAcePlayer(){
-        if(this.hand_player + 1 == 21) {
-            return 1;
-        }else if(this.hand_player + 11 == 21) {
-            return 11;
-        }else if(this.hand_player + 11 > 21) {
-            return 1;
-        }else
-            return 11;
-    }
-    public int checkAceBot(){
-        if(this.hand_dealer + 1 == 21) {
-            return 1;
-        }else if(this.hand_dealer + 11 == 21) {
-            return 11;
-        }else if(this.hand_dealer + 11 > 21) {
-            return 1;
-        }else
-            return 11;
-    }
-    public void addCard(){
+
+    public void startGame(){
         addCardPlayerToScreen(firstcard,cardMap.get(getRandom()));
         addCardPlayerToScreen(secondcard,cardMap.get(getRandom()));
-        if(hand_dealer == 21 ) {
+        if(hand_player == 21 ) {
             win++;
             Toast.makeText(BlackjackActivity.this, "YOU GOT A BLACKJACK", Toast.LENGTH_LONG).show();
+            return;
         }
+        addCardBotToScreen(firstcardbot,cardMap.get(getRandom()));
     }
     public void checkWinner(){
         if(hand_player > 21) {
@@ -283,7 +276,6 @@ public class BlackjackActivity extends AppCompatActivity {
         setScore();
     }
     public void addCardBot(){
-        addCardBotToScreen(firstcardbot,cardMap.get(getRandom()));
         addCardBotToScreen(secondcardbot,cardMap.get(getRandom()));
         while(true) {
             if (hand_dealer == 21) {
@@ -321,6 +313,7 @@ public class BlackjackActivity extends AppCompatActivity {
         stnButton.setClickable(false);
         hitButton.setClickable(false);
         addCardBot();
+
     }
     public void onClickStandBot(){
         checkWinner();
